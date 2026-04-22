@@ -11,10 +11,10 @@ import UIKit
 public struct AppColor {
     
     //Company colors
-    public static var companyColor: UIColor { UIColor(named: "MainColor")! }
-    public static var accentColor: UIColor { UIColor(named: "AccentColor")! }
-    public static var titleColor: UIColor { UIColor(named: "TitleColor")! }
-    
+    public static var companyColor: UIColor { UIColor(named: "MainColor") ?? .systemBlue }
+    public static var accentColor: UIColor { UIColor(named: "AccentColor") ?? .systemRed }
+    public static var titleColor: UIColor { UIColor(named: "TitleColor") ?? .systemGreen }
+
     //Common colors
     private static func bundleColor(_ name: String) -> UIColor {
         UIColor(named: name, in: Bundle.module, compatibleWith: nil) ?? UIColor.systemRed
