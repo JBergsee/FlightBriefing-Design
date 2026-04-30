@@ -107,3 +107,70 @@ public extension View {
     func padding(_ spacing: Spacing) -> some View { padding(spacing.value) }
     func padding(_ insets: SpacingInsets) -> some View { padding(insets.insets) }
 }
+
+
+#Preview("Spacing Scale") {
+    ScrollView {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("Spacing Tokens")
+                .font(.headline)
+            
+            spacingRow("xxs", spacing: .xxs)
+            spacingRow("xs", spacing: .xs)
+            spacingRow("s", spacing: .s)
+            spacingRow("m", spacing: .m)
+            spacingRow("l", spacing: .l)
+            spacingRow("xl", spacing: .xl)
+            spacingRow("xxl", spacing: .xxl)
+            spacingRow("x3l", spacing: .x3l)
+            spacingRow("x4l", spacing: .x4l)
+        }
+        .padding()
+    }
+}
+
+@ViewBuilder
+private func spacingRow(_ label: String, spacing: Spacing) -> some View {
+    HStack(spacing: 8) {
+        Text(label)
+            .frame(width: 40, alignment: .leading)
+            .font(.caption.monospaced())
+        
+        Rectangle()
+            .fill(Color.blue)
+            .frame(width: spacing.value, height: 20)
+        
+        Text("\(Int(spacing.value))pt")
+            .font(.caption2)
+            .foregroundStyle(.secondary)
+    }
+}
+
+#Preview("Spacing Insets") {
+    VStack(spacing: 20) {
+        Text("No Padding")
+            .background(Color.red.opacity(0.2))
+
+        Text("Xtra Small Padding")
+            .padding(SpacingInsets.xs)
+            .background(Color.brown.opacity(0.2))
+
+        Text("Small Padding")
+            .padding(SpacingInsets.s)
+            .background(Color.blue.opacity(0.2))
+        
+        Text("Medium Padding")
+            .padding(SpacingInsets.m)
+            .background(Color.green.opacity(0.2))
+        
+        Text("Large Padding")
+            .padding(SpacingInsets.l)
+            .background(Color.orange.opacity(0.2))
+        
+        Text("Custom Insets")
+            .padding(SpacingInsets(vertical: .xs, horizontal: .l))
+            .background(Color.purple.opacity(0.2))
+    }
+    .padding()
+}
+

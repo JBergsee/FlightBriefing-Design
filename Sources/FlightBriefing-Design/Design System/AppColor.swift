@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import SwiftUI
 
 public struct AppColor {
     
@@ -32,3 +33,61 @@ public struct AppColor {
     public static var attention: UIColor { bundleColor("Attention") }
     public static var fuelCheckPerformed: UIColor { bundleColor("FuelCheckPerformed") }
 }
+
+#Preview("Company Colors") {
+    VStack(spacing: 16) {
+        colorSwatch("Company Color", color: AppColor.companyColor)
+        colorSwatch("Accent Color", color: AppColor.accentColor)
+        colorSwatch("Title Color", color: AppColor.titleColor)
+    }
+    .padding()
+}
+
+#Preview("Module Colors") {
+    VStack(spacing: 16) {
+        colorSwatch("Module BG", color: AppColor.moduleBG)
+        colorSwatch("Module Text", color: AppColor.moduleText)
+        colorSwatch("Night Mode Mask", color: AppColor.nightModeMask)
+    }
+    .padding()
+}
+
+#Preview("Status Colors") {
+    VStack(spacing: 16) {
+        Text("Background Colors")
+            .font(.headline)
+        
+        colorSwatch("BG OK", color: AppColor.bgOK)
+        colorSwatch("BG Warning", color: AppColor.bgWarning)
+        colorSwatch("BG Attention", color: AppColor.bgAttention)
+        colorSwatch("BG Discard", color: AppColor.bgDiscard)
+        
+        Divider()
+        
+        Text("Foreground Colors")
+            .font(.headline)
+        
+        colorSwatch("OK", color: AppColor.ok)
+        colorSwatch("Warning", color: AppColor.warning)
+        colorSwatch("Attention", color: AppColor.attention)
+        colorSwatch("Fuel Check Performed", color: AppColor.fuelCheckPerformed)
+    }
+    .padding()
+}
+
+@ViewBuilder
+private func colorSwatch(_ name: String, color: UIColor) -> some View {
+    HStack {
+        Text(name)
+            .frame(maxWidth: .infinity, alignment: .leading)
+        
+        RoundedRectangle(cornerRadius: 8)
+            .fill(Color(uiColor: color))
+            .frame(width: 60, height: 40)
+            .overlay {
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(Color.primary.opacity(0.2), lineWidth: 1)
+            }
+    }
+}
+

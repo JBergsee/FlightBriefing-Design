@@ -29,3 +29,29 @@ public struct PrimaryButtonStyle: ButtonStyle {
 public extension ButtonStyle where Self == PrimaryButtonStyle {
     static var fbDefault: PrimaryButtonStyle { .init() }
 }
+#Preview("Primary Button Style") {
+    VStack(spacing: 20) {
+        Button("Default State") {
+            print("Tapped")
+        }
+        .buttonStyle(.fbDefault)
+        
+        Button("With Icon") {
+            print("Tapped")
+        }
+        .buttonStyle(.fbDefault)
+        
+        Button("Disabled State") {
+            print("Tapped")
+        }
+        .buttonStyle(.fbDefault)
+        .disabled(true)
+        
+        Button("Long Button Text Example") {
+            print("Tapped")
+        }
+        .buttonStyle(.fbDefault)
+    }
+    .padding()
+}
+
