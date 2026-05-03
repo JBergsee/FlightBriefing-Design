@@ -10,8 +10,8 @@ import SwiftUI
 
 /// A compact, borderless text field style with a subtle background fill,
 /// intended to visually match the original UIKit field (19pt tall).
-struct InputFieldStyle: TextFieldStyle {
-    func _body(configuration: TextField<_Label>) -> some View {
+public struct InputFieldStyle: TextFieldStyle {
+    public func _body(configuration: TextField<_Label>) -> some View {
         configuration
             // .padding(.horizontal, 4) // Maybe when we do the same in labels?
             .background(Color(.secondarySystemFill))
@@ -21,7 +21,7 @@ struct InputFieldStyle: TextFieldStyle {
 }
 
 /// Style alias so you can write: .textFieldStyle(.input)
-extension TextFieldStyle where Self == InputFieldStyle {
+public extension TextFieldStyle where Self == InputFieldStyle {
     static var input: InputFieldStyle {
         InputFieldStyle()
     }
