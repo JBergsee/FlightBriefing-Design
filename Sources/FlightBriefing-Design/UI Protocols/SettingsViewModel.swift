@@ -37,7 +37,7 @@ public enum SettingsAlertType: Identifiable {
 
 // MARK: - CompanyPreset
 
-#if DEBUG
+
 /// Debug-only company preset for quick credential filling.
 public struct CompanyPreset: Identifiable {
     public let id: String
@@ -52,7 +52,7 @@ public struct CompanyPreset: Identifiable {
         self.password = password
     }
 }
-#endif
+
 
 // MARK: - SettingsViewModel (Protocol)
 

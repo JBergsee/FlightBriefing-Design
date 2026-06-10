@@ -13,10 +13,13 @@ import SwiftUI
 public struct InputFieldStyle: TextFieldStyle {
     // Trailing text by default, can be overridden at call site
     var alignment: TextAlignment = .trailing
+    // datavalue font by default, can be overridden at call site
+    var font: Font = .dataValue
 
     public func _body(configuration: TextField<_Label>) -> some View {
         configuration
             // .padding(.horizontal, 4) // Maybe when we do the same in labels?
+            .font(font)
             .background(Color(.secondarySystemFill))
             .textFieldStyle(.plain) // removes the automatic border in some contexts
             .multilineTextAlignment(alignment)
@@ -30,6 +33,12 @@ public extension TextFieldStyle where Self == InputFieldStyle {
     }
     static func input(alignment: TextAlignment) -> InputFieldStyle {
         InputFieldStyle(alignment: alignment)
+    }
+    static func input(font: Font) -> InputFieldStyle {
+        InputFieldStyle(font: font)
+    }
+    static func input(alignment: TextAlignment, font: Font) -> InputFieldStyle {
+        InputFieldStyle(alignment: alignment, font: font)
     }
 }
 
@@ -45,6 +54,10 @@ public extension TextFieldStyle where Self == InputFieldStyle {
         TextField("Leading,  overriden", text: $text)
             .frame(width: 150)
             .textFieldStyle(.input(alignment: .leading))
+        Text("Text with other font")
+        TextField("Big Font", text: $text)
+            .frame(width: 150)
+            .textFieldStyle(.input(font: .title))
     }
     .frame(width: 300, height: 100)
 }
