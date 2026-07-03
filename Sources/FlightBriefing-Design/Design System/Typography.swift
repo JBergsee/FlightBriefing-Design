@@ -3,13 +3,7 @@
 
 import SwiftUI
 
-// Typography scale
-public enum Typography {
-    public static let ofpHeader = Font.system(.headline, design: .monospaced)
-    public static let smallLabel = Font.system(.caption, design: .monospaced)
-    public static let ofpData = Font.system(.body, design: .monospaced)
-    // Monospaced matters for your OFP/waypoint data alignment
-}
+
 
 // MARK: - Role-based fonts
 //
@@ -31,7 +25,7 @@ public extension Font {
     /// Value text in form-style data displays — the right-hand side of
     /// "Label: value" pairs and the contents of input fields.
     /// Monospaced so columns of numbers align under each other.
-    static let dataValue = Font.system(.subheadline, design: .monospaced)
+    static let dataValue = Font.dataLabel.monospaced()
 
     /// Header above a section or column of data ("Time", "Fuel", etc.).
     /// Slightly bolder and larger than ``dataLabel``.
@@ -44,14 +38,19 @@ public extension Font {
 
 #Preview("Typography Styles") {
     VStack(alignment: .leading, spacing: 20) {
-        Text("OFP Header Style")
-            .font(Typography.ofpHeader)
-        
-        Text("Small Label")
-            .font(Typography.smallLabel)
 
-        Text("OFP data")
-            .font(Typography.ofpData)
+        Text("ViewTitle font")
+            .font(.viewTitle)
+
+        Text("SectionTitle font")
+            .font(.sectionTitle)
+
+        Text("Datalabel font")
+            .font(.dataLabel)
+
+        Text("Datavalue font")
+            .font(.dataValue)
+
 
         // Show comparison with standard fonts
         Divider()
@@ -61,17 +60,15 @@ public extension Font {
                 .font(.caption)
                 .foregroundStyle(.secondary)
             
-            Text("OFP Header: 123.45 ABC")
-                .font(Typography.ofpHeader)
-            
-            Text("Headline: 123.45 ABC")
+            Text("Headline")
                 .font(.headline)
 
-            Text("OFP Data: 123.45 ABC")
-                .font(Typography.ofpData)
+            Text("Helvetica 15")
+                .font(Font.custom("Helvetica", size: 15))
 
-            Text("Body: 123.45 ABC")
-                .font(.body)
+            Text("Helvetica Light 15 monospaced")
+                .font(Font.custom("Helvetica-Light", size: 15)).monospaced()
+
 
         }
     }
