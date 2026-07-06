@@ -13,12 +13,14 @@ import SwiftUI
 
 public extension BinaryFloatingPoint {
     func fuelValueFormatted() -> String {
-        Double(self).formatted(.number.precision(.fractionLength(0)))
+        String(format:"%.0f", Double(self))
+        // Ideally: Double(self).formatted(.number.precision(.fractionLength(0)))
     }
 }
 
 public extension BinaryInteger {
     func fuelValueFormatted() -> String {
-        Int(self).formatted(.number.precision(.fractionLength(0)))
+        String(format:"%.0f", Double(self))
+        // Ideally: Int(self).formatted(.number.precision(.fractionLength(0)))
     }
 }

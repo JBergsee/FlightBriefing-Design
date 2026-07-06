@@ -1,4 +1,19 @@
-import Foundation
+import SwiftUI
+
+// MARK: - Environment
+
+public extension EnvironmentValues {
+    /// Disables the slide container's drag gesture when `true`.
+    /// Programmatic slide commands (``SlideCommander``) remain available.
+    /// Defaults to `false`, so existing call sites keep drag behaviour unchanged.
+    /// Usage:
+    ///`` @AppStorage("slideDragDisabled") private var slideDragDisabled = false
+    /// `` ...
+    /// `` SlideContainerView(...)
+    /// ``     .environment(\.slideDragDisabled, slideDragDisabled)
+    
+    @Entry var slideDragDisabled: Bool = false
+}
 
 // MARK: - SlideCommander
 

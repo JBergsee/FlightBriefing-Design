@@ -53,21 +53,20 @@ public struct Spacing: Sendable {
         }
 
         // We update the defaults a regular value and a potential offset
-        static let xxs = Spacing(value: Space.s4,  offset: Space.s4)
-        static let xs  = Spacing(value: Space.s8,  offset: Space.s8)
-        static let s   = Spacing(value: Space.s16, offset: Space.s8)
-        static let m   = Spacing(value: Space.s24, offset: Space.s8)
-        static let l   = Spacing(value: Space.s32, offset: Space.s8)
-        static let xl  = Spacing(value: Space.s40, offset: Space.s8)
-        static let xxl = Spacing(value: Space.s48, offset: Space.s16)
-        static let x3l = Spacing(value: Space.s64, offset: Space.s16)
-        static let x4l = Spacing(value: Space.s80, offset: Space.s16)
+    static let xs = Spacing(value: Space.s4,  offset: Space.s4)
+    static let s  = Spacing(value: Space.s8,  offset: Space.s8)
+        static let m   = Spacing(value: Space.s16, offset: Space.s8)
+        static let l   = Spacing(value: Space.s24, offset: Space.s8)
+        static let xl   = Spacing(value: Space.s32, offset: Space.s8)
+        static let xxl  = Spacing(value: Space.s40, offset: Space.s8)
+        static let x3l = Spacing(value: Space.s48, offset: Space.s16)
+        static let x4l = Spacing(value: Space.s64, offset: Space.s16)
+        static let x5l = Spacing(value: Space.s80, offset: Space.s16)
     }
 
 
 // MARK: - CGFloat conveniences
 public extension CGFloat {
-    static var xxs: CGFloat { Spacing.xxs.value }
     static var xs:  CGFloat { Spacing.xs.value }
     static var s:   CGFloat { Spacing.s.value }
     static var m:   CGFloat { Spacing.m.value }
@@ -115,7 +114,6 @@ public extension View {
             Text("Spacing Tokens")
                 .font(.headline)
             
-            spacingRow("xxs", spacing: .xxs)
             spacingRow("xs", spacing: .xs)
             spacingRow("s", spacing: .s)
             spacingRow("m", spacing: .m)
