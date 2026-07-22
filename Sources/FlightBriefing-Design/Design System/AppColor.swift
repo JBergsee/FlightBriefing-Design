@@ -12,9 +12,9 @@ import SwiftUI
 public struct AppColor {
     
     //Company colors
-    public static var companyColor: UIColor { UIColor(named: "MainColor") ?? .systemBlue }
-    public static var accentColor: UIColor { UIColor(named: "AccentColor") ?? .systemRed }
-    public static var titleColor: UIColor { UIColor(named: "TitleColor") ?? .systemGreen }
+    public static var companyColor: UIColor { UIColor(named: "MainColor") ?? .systemCyan }
+    public static var accentColor: UIColor { UIColor(named: "AccentColor") ?? .systemPurple }
+    public static var titleColor: UIColor { UIColor(named: "TitleColor") ?? .systemPink }
 
     //Common colors
     private static func bundleColor(_ name: String) -> UIColor {

@@ -21,7 +21,8 @@ struct AppTheme: ViewModifier {
             .toggleStyle(SwitchToggleStyle(tint: Color(AppColor.companyColor)))
 
         // Buttons
-            .buttonStyle(.fbDefault)
+        /// DO NOT APPLY, as they affect barbuttons as well.
+           // .buttonStyle(.fbDefault)
 
 
         // Examples:

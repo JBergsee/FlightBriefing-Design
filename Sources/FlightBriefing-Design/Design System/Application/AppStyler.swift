@@ -28,7 +28,7 @@ public struct AppStyler {
         var companyColor = AppColor.companyColor
 
         #if DEBUG
-        companyColor = .red
+        //companyColor = .yellow
         #endif
 
         // Tint color (mörkblå)
