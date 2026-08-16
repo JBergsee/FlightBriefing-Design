@@ -34,6 +34,42 @@ public extension Font {
     /// Prominent title at the top of a card-style panel (e.g. the
     /// large waypoint ident on the leg view).
     static let viewTitle = Font.system(.title2).bold()
+
+    // MARK: Dense list-row roles
+    //
+    // For information-dense table/list rows such as the flight selection cell,
+    // where a compact "heading over value" grid is packed into one row. Mapped
+    // to the text styles whose default sizes match the previous fixed-point
+    // layout, but scaling with Dynamic Type. Proportional spacing.
+
+    /// Small column heading in a dense list row ("Flight Nbr:", "STD:",
+    /// "Log ID:"). ~12pt. Pair with `.secondary` foreground.
+    static let listCellLabel = Font.system(.caption)
+
+    /// Primary value in a dense list row (flight number, airports, times,
+    /// registration, log ID). ~17pt.
+    static let listCellValue = Font.system(.body)
+
+
+    /// Tiny caption under an icon in a dense list row (e.g. the status text
+    /// below the status glyph). ~11pt.
+    static let listCellCaption = Font.system(.caption2)
+
+}
+
+// MARK: - Combined text-role styles
+//
+// Where a font role is always meant to be paired with a particular foreground
+// (see the "pair with .secondary" note above), the pairing is offered as a
+// single modifier so call sites can't drift apart.
+
+public extension View {
+    /// Applies the dense list-row label role — ``Font/listCellLabel`` together
+    /// with the secondary foreground it is designed to pair with.
+    func listCellLabelStyle() -> some View {
+        font(.listCellLabel)
+            .foregroundStyle(.secondary)
+    }
 }
 
 #Preview("Typography Styles") {
@@ -117,5 +153,40 @@ public extension Font {
         }
     }
     .padding()
+}
+
+// MARK: - Dense list-row role previews
+
+#Preview("List-row Fonts") {
+    VStack(alignment: .leading, spacing: 20) {
+
+        // A compact "heading over value" grid as used in the flight selection
+        // cell. Labels use the combined `listCellLabelStyle()` (font + secondary).
+        Grid(alignment: .leading, horizontalSpacing: 8, verticalSpacing: 4) {
+            GridRow {
+                Text("Flight Nbr:").listCellLabelStyle()
+                Text("Departure:").listCellLabelStyle()
+                Text("Destination:").listCellLabelStyle()
+                Text("STD:").listCellLabelStyle()
+            }
+            GridRow {
+                Text("NVR123").font(.listCellValue)
+                Text("ESSA").font(.listCellValue)
+                Text("GCLP").font(.listCellValue)
+                Text("261340").font(.listCellValue)
+            }
+        }
+
+
+        // Tiny caption under a status glyph.
+        VStack(spacing: 2) {
+            Image(systemName: "checkmark.circle").font(.title3)
+            Text("downloaded").font(.listCellCaption)
+        }
+
+
+    }
+    .padding()
+    .appTheme()
 }
 

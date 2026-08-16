@@ -11,6 +11,11 @@ import SwiftUI
 // MARK: - Button Style
 
 /// Imitates a bordered button with some extras.
+///
+/// The button colour follows the ambient `.tint` from the environment, so
+/// override it per call site with `.tint(_:)`. The app accent colour is the
+/// default because `appTheme()` sets it at the root; if you use this style
+/// outside a themed hierarchy, set `.tint(_:)` yourself.
 public struct PrimaryButtonStyle: ButtonStyle {
     public func makeBody(configuration: Configuration) -> some View {
         configuration.label
@@ -22,7 +27,6 @@ public struct PrimaryButtonStyle: ButtonStyle {
             .clipShape(Capsule(style: .continuous))
             .scaleEffect(configuration.isPressed ? 0.93 : 1)
             .animation(.smooth, value: configuration.isPressed)
-            .tint(SwiftUI.Color(uiColor: AppColor.accentColor))
     }
 }
 
@@ -31,27 +35,34 @@ public extension ButtonStyle where Self == PrimaryButtonStyle {
 }
 #Preview("Primary Button Style") {
     VStack(spacing: 20) {
-        Button("Default State") {
+
+        // Default: no explicit tint — follows the app accent from `appTheme()`.
+        Button("Default (accent tint)") {
             print("Tapped")
         }
         .buttonStyle(.fbDefault)
-        
-        Button("With Icon") {
+
+        // Per-call-site override: set the ambient tint and the style picks it up.
+        Button("Tinted red") {
             print("Tapped")
         }
+        .tint(.red)
         .buttonStyle(.fbDefault)
-        
+
+        // Any colour works, including design-system colours.
+        Button("Tinted with AppColor.warning") {
+            print("Tapped")
+        }
+        .tint(Color(AppColor.warning))
+        .buttonStyle(.fbDefault)
+
         Button("Disabled State") {
             print("Tapped")
         }
         .buttonStyle(.fbDefault)
         .disabled(true)
-        
-        Button("Long Button Text Example") {
-            print("Tapped")
-        }
-        .buttonStyle(.fbDefault)
     }
     .padding()
+    .appTheme() // supplies the default accent tint, as at a real UIHostingController root
 }
 

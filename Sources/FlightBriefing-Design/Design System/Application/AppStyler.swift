@@ -25,10 +25,11 @@ public struct AppStyler {
         let mainColor = UIColor.systemBackground
 
         // Company color (ljusblå)
-        var companyColor = AppColor.companyColor
-
         #if DEBUG
-        //companyColor = .yellow
+        let companyColor = AppColor.companyColor
+        //let companyColor = .yellow
+        #else
+        let companyColor = AppColor.companyColor
         #endif
 
         // Tint color (mörkblå)
