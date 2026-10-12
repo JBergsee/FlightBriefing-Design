@@ -107,6 +107,87 @@ public extension View {
     func padding(_ insets: SpacingInsets) -> some View { padding(insets.insets) }
 }
 
+// MARK: - Dynamic Type scaling
+
+extension Spacing {
+    /// The spacing scaled the way `@ScaledMetric` would, but for an explicit Dynamic Type size, so it
+    /// follows the view's `\.dynamicTypeSize` (including preview and subtree overrides).
+    func scaled(for size: DynamicTypeSize, relativeTo textStyle: UIFont.TextStyle) -> CGFloat {
+        let traits = UITraitCollection(preferredContentSizeCategory: UIContentSizeCategory(size))
+        return UIFontMetrics(forTextStyle: textStyle).scaledValue(for: value, compatibleWith: traits)
+    }
+}
+
+/**
+ Spacing tokens scaled to the view's Dynamic Type size.
+
+ The standard tokens (`.m`, `.padding(.s)`) are fixed. Use these where the spacing or size should
+ grow with the text. Name the property `scaledSpacing` so scaled and standard spacing are easy to tell apart:
+ ```
+ @ScaledSpacings private var scaledSpacing
+
+ HStack(spacing: scaledSpacing.m) { … }   // scales with Dynamic Type
+     .padding(.horizontal, .s)            // standard, fixed
+ ```
+ Scaling stops at `maximumSize` (default `.xxxLarge`), so accessibility sizes don't blow up the layout.
+ */
+@propertyWrapper
+public struct ScaledSpacings: DynamicProperty {
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    private let textStyle: UIFont.TextStyle
+    private let maximumSize: DynamicTypeSize
+
+    public init(relativeTo textStyle: UIFont.TextStyle = .body, maximumSize: DynamicTypeSize = .xxxLarge) {
+        self.textStyle = textStyle
+        self.maximumSize = maximumSize
+    }
+
+    public var wrappedValue: Tokens {
+        Tokens(size: min(dynamicTypeSize, maximumSize), textStyle: textStyle)
+    }
+
+    public struct Tokens {
+        let size: DynamicTypeSize
+        let textStyle: UIFont.TextStyle
+
+        public var xs: CGFloat {
+            Spacing.xs.scaled(for: size, relativeTo: textStyle)
+        }
+
+        public var s: CGFloat {
+            Spacing.s.scaled(for: size, relativeTo: textStyle)
+        }
+
+        public var m: CGFloat {
+            Spacing.m.scaled(for: size, relativeTo: textStyle)
+        }
+
+        public var l: CGFloat {
+            Spacing.l.scaled(for: size, relativeTo: textStyle)
+        }
+
+        public var xl: CGFloat {
+            Spacing.xl.scaled(for: size, relativeTo: textStyle)
+        }
+
+        public var xxl: CGFloat {
+            Spacing.xxl.scaled(for: size, relativeTo: textStyle)
+        }
+
+        public var x3l: CGFloat {
+            Spacing.x3l.scaled(for: size, relativeTo: textStyle)
+        }
+
+        public var x4l: CGFloat {
+            Spacing.x4l.scaled(for: size, relativeTo: textStyle)
+        }
+
+        public var x5l: CGFloat {
+            Spacing.x5l.scaled(for: size, relativeTo: textStyle)
+        }
+    }
+}
+
 
 #Preview("Spacing Scale") {
     ScrollView {
@@ -168,6 +249,61 @@ private func spacingRow(_ label: String, spacing: Spacing) -> some View {
         Text("Custom Insets")
             .padding(SpacingInsets(vertical: .xs, horizontal: .l))
             .background(Color.purple.opacity(0.2))
+    }
+    .padding()
+}
+
+/// Usage example for `ScaledSpacings`: scaled tokens (blue) next to the standard, fixed ones (gray).
+private struct ScaledSpacingExample: View {
+    @ScaledSpacings private var scaledSpacing
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: scaledSpacing.s) {
+            scaledRow("xs", scaled: scaledSpacing.xs, standard: .xs)
+            scaledRow("s", scaled: scaledSpacing.s, standard: .s)
+            scaledRow("m", scaled: scaledSpacing.m, standard: .m)
+            scaledRow("l", scaled: scaledSpacing.l, standard: .l)
+            scaledRow("xl", scaled: scaledSpacing.xl, standard: .xl)
+            scaledRow("xxl", scaled: scaledSpacing.xxl, standard: .xxl)
+        }
+        .padding(.horizontal, scaledSpacing.m)
+    }
+
+    private func scaledRow(_ label: String, scaled: CGFloat, standard: CGFloat) -> some View {
+        HStack(spacing: scaledSpacing.s) {
+            Text(label)
+                .font(.caption.monospaced())
+                .frame(width: scaledSpacing.xxl, alignment: .leading)
+            VStack(alignment: .leading, spacing: 2) {
+                Rectangle()
+                    .fill(Color.blue)
+                    .frame(width: scaled, height: 10)
+                Rectangle()
+                    .fill(Color.gray)
+                    .frame(width: standard, height: 10)
+            }
+            Text("\(Int(scaled.rounded())) / \(Int(standard)) pt")
+                .font(.caption2)
+                .foregroundStyle(.secondary)
+        }
+    }
+}
+
+#Preview("Scaled Spacing") {
+    HStack(alignment: .top, spacing: 32) {
+        VStack(alignment: .leading) {
+            Text("large")
+                .font(.headline)
+            ScaledSpacingExample()
+        }
+        .environment(\.dynamicTypeSize, .large)
+
+        VStack(alignment: .leading) {
+            Text("xxxLarge")
+                .font(.headline)
+            ScaledSpacingExample()
+        }
+        .environment(\.dynamicTypeSize, .xxxLarge)
     }
     .padding()
 }

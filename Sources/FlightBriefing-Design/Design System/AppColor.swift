@@ -34,6 +34,21 @@ public struct AppColor {
     public static var fuelCheckPerformed: UIColor { bundleColor("FuelCheckPerformed") }
 }
 
+// MARK: - SwiftUI colors
+//
+// The common AppColor colors as SwiftUI `Color`s, so views can write `.bgOK` instead of
+// `Color(uiColor: AppColor.bgOK)`. They stay adaptive (light/dark) like the UIColors.
+
+public extension Color {
+    static var bgOK: Color { Color(uiColor: AppColor.bgOK) }
+    static var bgWarning: Color { Color(uiColor: AppColor.bgWarning) }
+    static var bgAttention: Color { Color(uiColor: AppColor.bgAttention) }
+    static var bgDiscard: Color { Color(uiColor: AppColor.bgDiscard) }
+    static var ok: Color { Color(uiColor: AppColor.ok) }
+    static var warning: Color { Color(uiColor: AppColor.warning) }
+    static var attention: Color { Color(uiColor: AppColor.attention) }
+}
+
 #Preview("Company Colors") {
     VStack(spacing: 16) {
         colorSwatch("Company Color", color: AppColor.companyColor)

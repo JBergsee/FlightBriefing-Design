@@ -19,6 +19,7 @@ import SwiftUI
 public struct PrimaryButtonStyle: ButtonStyle {
     public func makeBody(configuration: Configuration) -> some View {
         configuration.label
+            .multilineTextAlignment(.center)
             .font(.body)
             .frame(maxWidth: .infinity)
             .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
