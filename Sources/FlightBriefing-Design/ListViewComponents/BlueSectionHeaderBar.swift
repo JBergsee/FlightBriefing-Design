@@ -23,7 +23,6 @@ public struct BlueSectionHeaderBar<Trailing: View>: View {
     public var body: some View {
         HStack(alignment: .center, spacing: .l) {
             Text(title)
-                .listHeaderStyle()
                 .lineLimit(1)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .layoutPriority(1) // The title gets the width; the controls keep their size

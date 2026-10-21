@@ -55,11 +55,6 @@ public extension Font {
     /// below the status glyph). ~11pt.
     static let listCellCaption = Font.system(.caption2)
 
-    /// Title of a list section header. System bold at the size of the UIKit
-    /// table header labels (Gill Sans Bold 20) — 20pt at the default size,
-    /// scaling with Dynamic Type. Pair with `.secondary` foreground.
-    /// Same font as ``sectionTitle`` for now, but kept as its own role.
-    static let listHeader = Font.system(.title3).bold()
 
 }
 
@@ -84,12 +79,6 @@ public extension View {
             .foregroundStyle(.secondary)
     }
 
-    /// Applies the list section-header role — ``Font/listHeader`` together
-    /// with the secondary foreground, like UIKit's plain table section headers.
-    func listHeaderStyle() -> some View {
-        font(.listHeader)
-            .foregroundStyle(.secondary)
-    }
 }
 
 #Preview("Typography Styles") {
@@ -181,7 +170,7 @@ public extension View {
     VStack(alignment: .leading, spacing: 20) {
 
         // List section-header title (font + secondary).
-        Text("List header").listHeaderStyle()
+        Text("List header").blueSectionHeader()
 
         // A compact "heading over value" grid as used in the flight selection
         // cell. Labels use the combined `listCellLabelStyle()` (font + secondary).

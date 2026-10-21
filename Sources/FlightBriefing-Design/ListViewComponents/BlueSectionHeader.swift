@@ -21,7 +21,7 @@ public struct BlueSectionHeader: ViewModifier {
             // Override the List section-header foreground remap (which renders header
             // content gray). Setting concrete adaptive levels restores true label/
             // secondaryLabel contrast inside the header, so `.primary`/`.secondary` work.
-            .foregroundStyle(Color(uiColor: .label), Color(uiColor: .secondaryLabel))
+            //.foregroundStyle(Color(uiColor: .label), Color(uiColor: .secondaryLabel))
             .background(
                 ZStack {
                     Color(uiColor: .systemBackground)   // opaque — blocks scroll-through
@@ -57,11 +57,21 @@ public extension View {
                     .font(.dataValue)
             }
         } header: {
-            Text("Section title")
-                .listHeaderStyle()
+            Text("Blue Section header")
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .blueSectionHeader()
         }
+        Section {
+            ForEach(0..<3, id: \.self) { index in
+                Text("Row \(index + 1)")
+                    .font(.dataValue)
+            }
+        } header: {
+            Text("Normal section header")
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .blueSectionHeader()
+        }
+
     }
     .listStyle(.plain)
 }
