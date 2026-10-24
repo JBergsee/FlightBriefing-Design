@@ -23,12 +23,21 @@ public extension View {
     ///   - horizontal: Leading and trailing padding. Defaults to `.l`, matching ``BlueSectionHeader``.
     ///   - vertical: Top and bottom padding. Defaults to `.m`.
     ///   - background: The row background. Defaults to none.
+    ///   - accent: Color of a narrow bar along the row's leading edge, e.g. marking a
+    ///     status together with a lightly tinted `background`. Defaults to none.
     func edgeToEdgeRow(horizontal: CGFloat = .l,
                        vertical: CGFloat = .m,
-                       background: some ShapeStyle = .clear) -> some View {
+                       background: some ShapeStyle = .clear,
+                       accent: Color? = nil) -> some View {
         padding(.horizontal, horizontal)
             .padding(.vertical, vertical)
             .background(background)
+            .overlay(alignment: .leading) {
+                if let accent {
+                    accent
+                        .frame(width: .s)
+                }
+            }
             .listRowInsets(EdgeInsets())
     }
 }
@@ -46,6 +55,9 @@ public extension View {
         Text("Small padding, attention background")
             .frame(maxWidth: .infinity, alignment: .leading)
             .edgeToEdgeRow(horizontal: .m, vertical: .s, background: Color.bgAttention)
+        Text("Light tint with accent bar")
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .edgeToEdgeRow(background: Color.orange.opacity(0.15), accent: .orange)
     }
     .listStyle(.plain)
 }
